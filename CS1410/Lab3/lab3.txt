@@ -1,0 +1,125 @@
+Script started on Wed, Feb 13, 2019  5:58:33 PM
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ cat lab3_2.c
+#include <stdio.h>
+void swap(int * var1, int * var2){
+	int temp;
+	temp = *var1;
+	*var1 = *var2;
+	*var2 = temp;
+}
+void ReverseArray(int size, int *ptr2Array);
+void ReverseArray(int size, int *ptr2Array){
+	for(int i=0;i<(size/2);i++){
+		swap(ptr2Array+i,ptr2Array+size-1-i);
+	}
+}
+
+void ArrayInfo(int A[],int *sum,float *avg,int *min,int *max,int size){
+	*sum = 0;
+	*min = *A;
+	*max = *A;
+	for(int i =0;i<size;i++){
+		if(A[i]<*min){
+			*min=A[i];
+		}else if(*max<A[i]){
+			*max=A[i];
+		}
+		*sum=*sum+A[i];
+	}
+	*avg=(double)*sum/size;
+}
+
+void PrintArray(int size, int array []){
+	for(int i=0; i<size; i++){
+		printf("array[%d] = %d \n", i, array[i] );
+		printf("array[%d] = %p \n\n", i, &array[i] );
+	}
+}
+
+void Sort(int size, int array[]){
+	for(int i=0;i<size-1;i++){
+		if(array[i]>array[i+1]){
+			swap(array+(i+1),array+i);
+			i=-1;
+		}
+	}
+}
+int main(){
+	int sum,min,max;
+	float avg;
+	int data [] = {2, 7, 8, -8, 1, 9, 3, 5};
+	int size = sizeof(data)/sizeof(int);
+	Sort(size, data);
+	PrintArray(size, data);
+	ArrayInfo(data,&sum,&avg,&min,&max,size);
+	ReverseArray(size,data);
+	printf("\n\nsum: %d\taverage: %.3f\tmax: %d\tmin: %d\n\n\n",sum, avg, min ,max);
+	PrintArray(size, data);
+	return 0;
+}]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ cat lab3_2.c[C[C[Kcat lab3_2.c[C[C[8Pexit[C[C./run[C[Cgcc -Wall lab3_2.c -o run
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ ./run
+array[0] = -8 
+array[0] = 0xffffcbe0 
+
+array[1] = 1 
+array[1] = 0xffffcbe4 
+
+array[2] = 2 
+array[2] = 0xffffcbe8 
+
+array[3] = 3 
+array[3] = 0xffffcbec 
+
+array[4] = 5 
+array[4] = 0xffffcbf0 
+
+array[5] = 7 
+array[5] = 0xffffcbf4 
+
+array[6] = 8 
+array[6] = 0xffffcbf8 
+
+array[7] = 9 
+array[7] = 0xffffcbfc 
+
+
+
+sum: 27	average: 3.375	max: -8	min: 9
+
+
+array[0] = 9 
+array[0] = 0xffffcbe0 
+
+array[1] = 8 
+array[1] = 0xffffcbe4 
+
+array[2] = 7 
+array[2] = 0xffffcbe8 
+
+array[3] = 5 
+array[3] = 0xffffcbec 
+
+array[4] = 3 
+array[4] = 0xffffcbf0 
+
+array[5] = 2 
+array[5] = 0xffffcbf4 
+
+array[6] = 1 
+array[6] = 0xffffcbf8 
+
+array[7] = -8 
+array[7] = 0xffffcbfc 
+
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ xe[K[Kexit
+exit
+
+Script done on Wed, Feb 13, 2019  5:59:00 PM

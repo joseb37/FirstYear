@@ -1,0 +1,104 @@
+Script started on Wed, Mar  6, 2019  2:15:43 PM
+]0;~/winter2019/cs141/lab5
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141/lab5[0m
+$ cat lab.[K5.c
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 100
+void printArray(char mat[][MAX], unsigned int size){
+	printf("\n");
+	for(int i=0;i<size;i++){
+		printf("%s\n", mat[i]);
+	}
+}
+void SortArray(char A[][MAX],unsigned int size){
+	char temp[MAX];
+	for(int i=0;i<size-1;i++){
+		if(strcmp(A[i],A[i+1])>0){
+			strcpy(temp ,A[i+1]);
+			strcpy(A[i+1] ,A[i]);
+			strcpy(A[i] ,temp);
+			i=-1;
+		}
+	}
+}
+void ParseSentence(char* word){
+	char* wordToken;
+	char words[MAX][MAX];
+	wordToken =strtok(word," .;,\n");
+	strcpy(words[0],wordToken);
+	int j;
+	for(j =1;;j++){
+		wordToken = strtok(NULL," .;,\n");
+		if(wordToken == NULL){;break;}
+		strcpy(words[j],wordToken);
+	}
+	SortArray(words,j);
+	printArray(words,j);
+}
+int main(void){
+	char string[MAX];
+	printf("Enter a phrase <100 characters\n");
+	fgets(string,MAX,stdin);
+	ParseSentence(string);
+	return 0;
+}]0;~/winter2019/cs141/lab5
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141/lab5[0m
+$ cat lab5.c[C[C[6Pexit[C[C./run[C[Ccat lab4.c[C[C[5P./run[C[C[1Pexit[C[Ccat lab5.c[C[C[Kcat lab5.c[C[C[6Pexit[C[C./run[C[Ccat lab4.c[C[Cgcc -Wall lab4.c -o run
+[01m[Kgcc:[m[K [01;31m[Kerror: [m[Klab4.c: No such file or directory
+[01m[Kgcc:[m[K [01;31m[Kfatal error: [m[Kno input files
+compilation terminated.
+]0;~/winter2019/cs141/lab5
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141/lab5[0m
+$ gcc -Wall lab4.c -o run[1P[1@5
+]0;~/winter2019/cs141/lab5
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141/lab5[0m
+$ gcc -Wall lab5.c -o run4[C[C[C[C[C[C[C[C[C[C[C[13Pcat lab5.c[C[C[6Pexit[C[C./run
+Enter a phrase <100 characters
+hello my name is matt
+
+hello
+is
+matt
+my
+name
+]0;~/winter2019/cs141/lab5
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141/lab5[0m
+$ ./run[C[Cgcc -Wall lab5.c -o run[C[C./run[K
+Enter a phrase <100 characters
+z y x w v u t s r q p o n m l j   k j i h g f e d c b a
+
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l
+m
+n
+o
+p
+q
+r
+s
+t
+u
+v
+w
+x
+y
+z
+]0;~/winter2019/cs141/lab5
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141/lab5[0m
+$ exit
+exit
+
+Script done on Wed, Mar  6, 2019  2:16:49 PM

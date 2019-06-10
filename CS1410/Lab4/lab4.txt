@@ -1,0 +1,71 @@
+Script started on Wed, Feb 27, 2019  3:39:54 PM
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ exit[C[C./run[C[Cgcc -Wall lab3_2.c -o run[C[1P[1P[1P[1@4
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ cc[Kat lab4.c
+#include <stdio.h>
+#include <string.h>
+void RecursiveReverse(char *buffer){
+	int len = strlen(buffer);
+	char temp;
+	static int i = 0;
+	if(i == len/2){
+		
+	}else{
+		temp = *(buffer + len-1-i);
+		*(buffer + len-1-i) = *(buffer+i);
+		*(buffer+i) = temp;
+		i++;
+		RecursiveReverse(buffer);
+		
+	}
+}
+void Reverse(char *buffer){
+	int len= strlen(buffer);
+	char temp;
+	int i;
+	for(i = 0;i<len/2;i++){
+		temp = *(buffer + len-1-i);
+		*(buffer + len-1-i) = *(buffer+i);
+		*(buffer+i) = temp;
+	}
+}
+
+int main(){
+	char buffer1[]={'t','h','i','s',' ','i','s',' ','t','h','e',' ','f','i','r','s','t',' ','b','u','f','f','e','r','.','\0'};
+	char buffer2[]="this is the second buffer.";
+	char buffer3[80];
+	char *pbuffer = buffer3;
+	printf("Enter a phrase <80 characters\n");
+	scanf("%[^'\n']s",buffer3);
+	printf("%s\n",buffer1);
+	printf("%s\n",buffer2);
+	printf("%s\n",buffer3);
+	while(*pbuffer != '\0'){
+		printf("%c", *pbuffer);
+		pbuffer++;
+	}
+	Reverse(buffer3);
+	printf("\n%s",buffer3);
+	RecursiveReverse(buffer3);
+	printf("\n%s\n",buffer3);
+	return 0;
+}]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ cat lab4.c[C[Cgcc -Wall lab4.c -o run[C[Cexit[K[C[C./run
+Enter a phrase <80 characters
+hello my name is matthew
+this is the first buffer.
+this is the second buffer.
+hello my name is matthew
+hello my name is matthew
+wehttam si eman ym olleh
+hello my name is matthew
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ exit
+exit
+
+Script done on Wed, Feb 27, 2019  3:40:32 PM

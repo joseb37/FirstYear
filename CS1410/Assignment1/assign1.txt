@@ -1,0 +1,279 @@
+Script started on Thu, Feb  7, 2019  6:22:08 PM
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ cat assign1.c
+#include <stdio.h>
+#define COL 20
+#define ROW 20
+#include <stdlib.h>
+#include <time.h>
+
+/*Description: This function will print an array
+Input: a 2d array the size of rows of the array and the size of the columns
+Output: prints the contents of the array in a tabular format*/
+void displayArray2D(const int mat[][COL],unsigned int rowsize,unsigned int colsize);
+void displayArray2D(const int mat[][COL],unsigned int rowsize,unsigned int colsize){
+	printf("\n");
+	for(int i = 0; i<rowsize;i++){
+		for(int j =0;j<colsize;j++){
+			printf("\t%d, ", mat[i][j]);
+		}
+		printf("\n");
+	} 
+}
+
+int CopyArray2DSpiral(int A[][COL], int B[][COL], unsigned int rowsize, unsigned int colsize);
+int CopyArray2DSpiral(int A[][COL], int B[][COL], unsigned int rowsize, unsigned int colsize){
+	return 0;
+}
+
+
+/*
+Description: This function will copy an array into another array
+Input: 2 2d arrays the size of rows of the arrays and the size of the columns
+Output: returns 0 is copy is sucessful
+*/
+int CopyArray2D(int A[][COL], int B[][COL], unsigned int rowsize,unsigned int colsize);
+int CopyArray2D(int A[][COL], int B[][COL], unsigned int rowsize,unsigned int colsize){
+	for(int i = 0; i<rowsize;i++){
+		for(int j =0;j<colsize;j++){
+			B[i][j]=A[i][j];
+		}
+	} 
+	return 0;
+}
+
+/*
+This function will sort a 2d array in ascending or descending order rowwise
+a 2d array the size of rows of the array and the size of the columns and either a 1 for ascending orer or a 2 for decending
+returns 0 is sort is sucessful -1 if unsucessful
+*/
+int Sort2DArray(int A[][COL], unsigned int rowsize, unsigned int colsize, int order);
+int Sort2DArray(int A[][COL], unsigned int rowsize, unsigned int colsize, int order){
+	int temp;
+	if(order == 1){ //acsending
+		//holds the value of the smallest value
+		for(int i=0;i<rowsize;i++){
+			for(int j=0;j<colsize;j++){
+				if(j!=0 && A[i][j-1]>A[i][j]){//sorts the row
+					temp = A[i][j-1];
+					A[i][j-1] = A[i][j];
+					A[i][j] = temp;
+					i = 0;
+					j = 0;
+				}else if(j == 0 && i != 0 && A[i-1][colsize-1]>A[i][0]){//checks if the last element in the row above is larger
+					temp = A[i-1][colsize-1];
+					A[i-1][colsize-1] = A[i][j];
+					A[i][j] = temp;
+					i = 0;
+					j = 0;
+				}
+			}
+		}
+	}else if(order == 2){//descending
+		for(int i=0;i<rowsize;i++){
+			for(int j=0;j<colsize;j++){
+				if(j!=0 && A[i][j-1]<A[i][j]){//sorts the row
+					temp = A[i][j-1];
+					A[i][j-1] = A[i][j];
+					A[i][j] = temp;
+					i = 0;
+					j = 0;
+				}else if(j == 0 && i != 0 && A[i-1][colsize-1]<A[i][0]){//checks if the last element in the row above is smaller
+					temp = A[i-1][colsize-1];
+					A[i-1][colsize-1] = A[i][j];
+					A[i][j] = temp;
+					i = 0;
+					j = 0;//resets
+				}
+			}
+		}
+	}else{
+		return -1;
+	}
+	return 0;
+}
+/*
+Description: this function will sum the contents of a speciied column of a array
+input:  a 2d array the size of rows of the array and the size of the columns and the specified column
+output: returns the sum of the column
+*/
+int FindColSum(int A[][COL], unsigned int rowsize, unsigned int colsize, unsigned int col_to_sum);
+int FindColSum(int A[][COL], unsigned int rowsize, unsigned int colsize, unsigned int col_to_sum){
+	int sum = 0; // holds the sum of the column
+	for(int i=0;i<rowsize;i++){
+		sum+=A[i][col_to_sum];
+	}
+	return sum;
+}
+/*
+Description: This function will find the largest element in an array
+Input: a 2d array the size of rows of the array and the size of the columns
+Output: the mallest value
+*/
+int FindLargest(int A[][COL], unsigned int rowsize, unsigned int colsize);
+int FindLargest(int A[][COL], unsigned int rowsize, unsigned int colsize){
+	int large = A[0][0];	//holds the value of the largest value
+	for(int i=0;i<rowsize;i++){
+		for(int j=0;j<colsize;j++){
+			if(large<A[i][j]){
+				large = A[i][j];
+			}
+		}
+	}
+	return large;
+}
+/*
+Description: This function will populate an array with random integers
+Input: a 2d array the size of rows of the array and the size of the columns and the minimum and the maximum value of the potential elements of the array
+Output: N/A
+*/
+void populateArray2DUnique(int A[][COL], unsigned int rowsize,unsigned int colsize, int min, int max);
+void populateArray2DUnique(int A[][COL], unsigned int rowsize,unsigned int colsize, int min, int max){
+	srand(time(NULL));
+	for(int i=0;i<rowsize;i++){
+		for(int j=0;j<colsize;j++){
+			A[i][j] = min+rand()%(max-min + 1);
+		}
+	}
+}
+int main(){
+	//function parameters
+	int A[ROW][COL];
+	int B[ROW][COL];
+	int max,min;
+	int order;
+	int colsize,rowsize,col_to_sum;
+	
+	//input
+	printf("Please enter the rowsize: ");
+	scanf("%d",&rowsize);
+	printf("\nPlease enter the colsize: ");
+	scanf("%d",&colsize);
+	printf("\nPlease enter the maximum value in the array: ");
+	scanf("%d", &max);
+	printf("\nPlease enter the minimum value in the array: ");
+	scanf("%d", &min);
+	
+	//function calls
+	populateArray2DUnique(A, rowsize,colsize,min, max);
+	displayArray2D(A, rowsize,colsize);
+	printf("\nThe largest value is: %d",FindLargest(A, rowsize,colsize));
+	printf("\nPlease enter the column to sum (first column is 0): ");
+	scanf("%d",&col_to_sum);
+	printf("The sum of that collumn is: %d",FindColSum(A, rowsize,colsize,col_to_sum));
+	printf("\nEnter 1 to sort increasing or 2 to decrease: ");
+	scanf("%d",&order);
+	Sort2DArray(A, rowsize,colsize,order);
+	displayArray2D(A, rowsize,colsize);
+	CopyArray2D(A,B,rowsize,colsize);
+	
+	return 0;
+}]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ cc asign[K[K[Ksign1.c
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ cc assign1.c[C[C[C[1@at[C[C[C[C[C[C[C[C[C[C[C[C[8P./run[C[Cgcc -Wall assign1.c -o run[C[C./run[K
+Please enter the rowsize: 3
+
+Please enter the colsize: 4
+
+Please enter the maximum value in the array: 6
+
+Please enter the minimum value in the array: 7 -3
+
+	-1, 	4, 	3, 	4, 
+	-1, 	1, 	1, 	5, 
+	4, 	0, 	6, 	-3, 
+
+The largest value is: 6
+Please enter the column to sum (first column is 0): 0
+The sum of that collumn is: 2
+Enter 1 to sort increasing or 2 to decrease: 2
+
+	6, 	5, 	4, 	4, 
+	4, 	3, 	1, 	1, 
+	0, 	-1, 	-1, 	-3, 
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ ./run[C[Ccc assign1.c[C[C[C[1@at[C[C[C[C[C[C[C[C[C[C[C[C[8P./run[C[Cgcc -Wall assign1.c -o run[C[C./run[K[C[Ccat assign1.c[C[C[C[1Pc[C[C[C[C[C[C[C[C[C[C[C[C[7P./run[C[C[K./run[C[Ccc assign1.c[C[C[C[1@at[C[C[C[C[C[C[C[C[C[C[C[C[8P./run
+Please enter the rowsize: 20 20   
+
+Please enter the colsize: 20
+
+Please enter the maximum value in the array: 100
+
+Please enter the minimum value in the array: -100
+
+	15, 	-35, 	-76, 	97, 	-73, 	-52, 	75, 	31, 	-92, 	-96, 	74, 	-24, 	74, 	-93, 	35, 	28, 	-49, 	54, 	-29, 	-93, 
+	-3, 	-58, 	38, 	30, 	26, 	84, 	-37, 	26, 	-59, 	24, 	-38, 	-12, 	76, 	-46, 	-56, 	-35, 	66, 	45, 	56, 	36, 
+	25, 	-50, 	62, 	9, 	-7, 	7, 	-25, 	-43, 	-11, 	41, 	-38, 	-75, 	89, 	-62, 	-26, 	-68, 	91, 	11, 	90, 	20, 
+	29, 	16, 	-39, 	-94, 	-87, 	26, 	-2, 	-3, 	46, 	-41, 	-32, 	-99, 	-22, 	98, 	-37, 	12, 	-14, 	32, 	-83, 	41, 
+	-59, 	-36, 	1, 	34, 	-40, 	-90, 	75, 	-3, 	60, 	56, 	-8, 	75, 	-33, 	13, 	-57, 	64, 	-22, 	43, 	-81, 	21, 
+	8, 	94, 	37, 	36, 	96, 	80, 	-23, 	-32, 	-30, 	-76, 	-82, 	97, 	-84, 	-38, 	-9, 	85, 	10, 	-10, 	-9, 	-93, 
+	94, 	95, 	8, 	22, 	90, 	-12, 	82, 	83, 	84, 	18, 	95, 	-86, 	-89, 	1, 	-37, 	85, 	91, 	-91, 	-1, 	-88, 
+	-52, 	-67, 	58, 	85, 	20, 	-33, 	-75, 	-5, 	-26, 	-74, 	-89, 	78, 	-92, 	49, 	-10, 	66, 	-29, 	-44, 	-48, 	11, 
+	72, 	-27, 	-63, 	-7, 	1, 	-22, 	-64, 	29, 	51, 	42, 	98, 	23, 	34, 	-94, 	-39, 	-57, 	-68, 	-11, 	-56, 	-78, 
+	-60, 	-60, 	-60, 	65, 	-28, 	-70, 	69, 	-80, 	-21, 	-3, 	-31, 	-82, 	-17, 	-34, 	-95, 	85, 	68, 	27, 	23, 	-36, 
+	50, 	-86, 	-84, 	33, 	-62, 	-16, 	75, 	66, 	-35, 	-15, 	92, 	-14, 	86, 	79, 	-56, 	-21, 	-94, 	-75, 	-56, 	97, 
+	43, 	35, 	-34, 	-92, 	-20, 	6, 	-42, 	-17, 	60, 	9, 	58, 	66, 	-74, 	-39, 	65, 	-55, 	89, 	84, 	-67, 	-85, 
+	89, 	83, 	76, 	14, 	-21, 	-54, 	-41, 	82, 	-57, 	-87, 	69, 	-97, 	-74, 	13, 	78, 	-86, 	60, 	-81, 	-22, 	-98, 
+	-95, 	81, 	24, 	57, 	-17, 	61, 	90, 	-72, 	-15, 	27, 	13, 	0, 	6, 	25, 	55, 	22, 	73, 	-64, 	-36, 	21, 
+	48, 	-71, 	-54, 	12, 	-19, 	22, 	73, 	52, 	13, 	-36, 	89, 	54, 	95, 	86, 	56, 	-9, 	42, 	-49, 	-61, 	-46, 
+	-99, 	23, 	8, 	7, 	69, 	4, 	71, 	-16, 	36, 	86, 	6, 	19, 	-25, 	28, 	-7, 	-43, 	11, 	-2, 	32, 	-98, 
+	39, 	-89, 	84, 	70, 	-63, 	-19, 	1, 	-1, 	39, 	-87, 	19, 	-62, 	-97, 	62, 	21, 	-28, 	90, 	-27, 	-9, 	54, 
+	54, 	16, 	20, 	-28, 	-13, 	85, 	17, 	-65, 	58, 	-23, 	93, 	30, 	-11, 	-60, 	39, 	-24, 	53, 	-61, 	67, 	98, 
+	-20, 	34, 	16, 	-88, 	21, 	62, 	44, 	-81, 	71, 	91, 	94, 	29, 	-70, 	97, 	-98, 	-23, 	-77, 	44, 	17, 	-8, 
+	65, 	66, 	-11, 	-61, 	67, 	75, 	70, 	-22, 	50, 	-39, 	100, 	-34, 	90, 	77, 	-39, 	-52, 	-15, 	-20, 	64, 	83, 
+
+The largest value is: 100
+Please enter the column to sum (first column is 0): 0 5
+The sum of that collumn is: 144
+Enter 1 to sort increasing or 2 to decrease: 1
+
+	-99, 	-99, 	-98, 	-98, 	-98, 	-97, 	-97, 	-96, 	-95, 	-95, 	-94, 	-94, 	-94, 	-93, 	-93, 	-93, 	-92, 	-92, 	-92, 	-91, 
+	-90, 	-89, 	-89, 	-89, 	-88, 	-88, 	-87, 	-87, 	-87, 	-86, 	-86, 	-86, 	-85, 	-84, 	-84, 	-83, 	-82, 	-82, 	-81, 	-81, 
+	-81, 	-80, 	-78, 	-77, 	-76, 	-76, 	-75, 	-75, 	-75, 	-74, 	-74, 	-74, 	-73, 	-72, 	-71, 	-70, 	-70, 	-68, 	-68, 	-67, 
+	-67, 	-65, 	-64, 	-64, 	-63, 	-63, 	-62, 	-62, 	-62, 	-61, 	-61, 	-61, 	-60, 	-60, 	-60, 	-60, 	-59, 	-59, 	-58, 	-57, 
+	-57, 	-57, 	-56, 	-56, 	-56, 	-56, 	-55, 	-54, 	-54, 	-52, 	-52, 	-52, 	-50, 	-49, 	-49, 	-48, 	-46, 	-46, 	-44, 	-43, 
+	-43, 	-42, 	-41, 	-41, 	-40, 	-39, 	-39, 	-39, 	-39, 	-39, 	-38, 	-38, 	-38, 	-37, 	-37, 	-37, 	-36, 	-36, 	-36, 	-36, 
+	-35, 	-35, 	-35, 	-34, 	-34, 	-34, 	-33, 	-33, 	-32, 	-32, 	-31, 	-30, 	-29, 	-29, 	-28, 	-28, 	-28, 	-27, 	-27, 	-26, 
+	-26, 	-25, 	-25, 	-24, 	-24, 	-23, 	-23, 	-23, 	-22, 	-22, 	-22, 	-22, 	-22, 	-21, 	-21, 	-21, 	-20, 	-20, 	-20, 	-19, 
+	-19, 	-17, 	-17, 	-17, 	-16, 	-16, 	-15, 	-15, 	-15, 	-14, 	-14, 	-13, 	-12, 	-12, 	-11, 	-11, 	-11, 	-11, 	-10, 	-10, 
+	-9, 	-9, 	-9, 	-9, 	-8, 	-8, 	-7, 	-7, 	-7, 	-5, 	-3, 	-3, 	-3, 	-3, 	-2, 	-2, 	-1, 	-1, 	0, 	1, 
+	1, 	1, 	1, 	4, 	6, 	6, 	6, 	7, 	7, 	8, 	8, 	8, 	9, 	9, 	10, 	11, 	11, 	11, 	12, 	12, 
+	13, 	13, 	13, 	13, 	14, 	15, 	16, 	16, 	16, 	17, 	17, 	18, 	19, 	19, 	20, 	20, 	20, 	21, 	21, 	21, 
+	21, 	22, 	22, 	22, 	23, 	23, 	23, 	24, 	24, 	25, 	25, 	26, 	26, 	26, 	27, 	27, 	28, 	28, 	29, 	29, 
+	29, 	30, 	30, 	31, 	32, 	32, 	33, 	34, 	34, 	34, 	35, 	35, 	36, 	36, 	36, 	37, 	38, 	39, 	39, 	39, 
+	41, 	41, 	42, 	42, 	43, 	43, 	44, 	44, 	45, 	46, 	48, 	49, 	50, 	50, 	51, 	52, 	53, 	54, 	54, 	54, 
+	54, 	55, 	56, 	56, 	56, 	57, 	58, 	58, 	58, 	60, 	60, 	60, 	61, 	62, 	62, 	62, 	64, 	64, 	65, 	65, 
+	65, 	66, 	66, 	66, 	66, 	66, 	67, 	67, 	68, 	69, 	69, 	69, 	70, 	70, 	71, 	71, 	72, 	73, 	73, 	74, 
+	74, 	75, 	75, 	75, 	75, 	75, 	76, 	76, 	77, 	78, 	78, 	79, 	80, 	81, 	82, 	82, 	83, 	83, 	83, 	84, 
+	84, 	84, 	84, 	85, 	85, 	85, 	85, 	85, 	86, 	86, 	86, 	89, 	89, 	89, 	89, 	90, 	90, 	90, 	90, 	90, 
+	91, 	91, 	91, 	92, 	93, 	94, 	94, 	94, 	95, 	95, 	95, 	96, 	97, 	97, 	97, 	97, 	98, 	98, 	98, 	100, 
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ ./run[C[Ccc assign1.c[C[C[C[1@at[C[C[C[C[C[C[C[C[C[C[C[C[C[1Pc[C[C[C[C[C[C[C[C[C[C[C[C[7P./run
+Please enter the rowsize: 1
+
+Please enter the colsize: 1
+
+Please enter the maximum value in the array: 999
+
+Please enter the minimum value in the array: -00   0
+
+	246, 
+
+The largest value is: 246
+Please enter the column to sum (first column is 0): 0
+The sum of that collumn is: 246
+Enter 1 to sort increasing or 2 to decrease: 2
+
+	246, 
+]0;~/winter2019/cs141
+[32mmattm@LAPTOP-42MARVS2 [33m~/winter2019/cs141[0m
+$ exit
+exit
+
+Script done on Thu, Feb  7, 2019  6:24:51 PM
