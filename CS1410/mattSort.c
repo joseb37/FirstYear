@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 void printArray(const int mat[],unsigned int size);
 void printArray(const int mat[], unsigned int size){
 	printf("\n");
